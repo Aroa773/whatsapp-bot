@@ -1,0 +1,12 @@
+2025/04/16-13:28:12.929 5f5bcd Reusing MANIFEST /Users/aroaagustinosoto/Documents/proyecto_whatsapp/tokens/whatsapp-bot/Default/Local Storage/leveldb/MANIFEST-000001
+2025/04/16-13:28:12.931 5f5bcd Recovering log #3
+2025/04/16-13:28:12.931 5f5bcd Reusing old log /Users/aroaagustinosoto/Documents/proyecto_whatsapp/tokens/whatsapp-bot/Default/Local Storage/leveldb/000003.log 
+2025/04/17-01:02:20.690 5f5bcf Level-0 table #5: started
+2025/04/17-01:02:20.708 5f5bcf Level-0 table #5: 18265 bytes OK
+2025/04/17-01:02:20.719 5f5bcf Delete type=0 #3
+2025/04/17-10:53:16.575 5f5bcd Level-0 table #7: started
+2025/04/17-10:53:16.588 5f5bcd Level-0 table #7: 14592 bytes OK
+2025/04/17-10:53:16.593 5f5bcd Delete type=0 #4
+2025/04/17-18:21:13.236 5f5bcd Level-0 table #9: started
+2025/04/17-18:21:13.244 5f5bcd Level-0 table #9: 14129 bytes OK
+2025/04/17-18:21:13.247 5f5bcd Delete type=0 #6

@@ -1,0 +1,23 @@
+Last login: Sat Apr 12 00:51:37 on ttys022
+aroaagustinosoto@MacBook-Air-de-Aroa ~ % cd /Users/aroaagustinosoto/Documents/proyecto_whatsapp
+
+aroaagustinosoto@MacBook-Air-de-Aroa proyecto_whatsapp % python3 webhook.py
+
+ * Serving Flask app 'webhook'
+ * Debug mode: on
+Address already in use
+Port 5001 is in use by another program. Either identify and stop that program, or start the server with a different port.
+aroaagustinosoto@MacBook-Air-de-Aroa proyecto_whatsapp % lsof -i :5001
+
+COMMAND   PID             USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+Python  57368 aroaagustinosoto    6u  IPv4 0xe0d2eb06b00d0ce7      0t0  TCP localhost:commplex-link (LISTEN)
+Python  57440 aroaagustinosoto    6u  IPv4 0xe0d2eb06b00d0ce7      0t0  TCP localhost:commplex-link (LISTEN)
+Python  57440 aroaagustinosoto    8u  IPv4 0xe0d2eb06b00d0ce7      0t0  TCP localhost:commplex-link (LISTEN)
+aroaagustinosoto@MacBook-Air-de-Aroa proyecto_whatsapp % COMMAND   PID   USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+python3  12345  user   12u  IPv4 0x12345678      0t0  TCP *:5001 (LISTEN)
+
+/usr/bin/COMMAND: line 4: PID: command not found
+zsh: no matches found: *:5001
+aroaagustinosoto@MacBook-Air-de-Aroa proyecto_whatsapp % kill -9 57368
+aroaagustinosoto@MacBook-Air-de-Aroa proyecto_whatsapp % kill -9 57440
+aroaagustinosoto@MacBook-Air-de-Aroa proyecto_whatsapp % 
