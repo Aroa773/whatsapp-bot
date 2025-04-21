@@ -27,6 +27,7 @@ def webhook():
     return "Mensaje recibido", 200
 
 if __name__ == "__main__":
-    # Asegurarse de que la aplicación escuche en 0.0.0.0 y el puerto adecuado proporcionado por Render
+    # Escuchar en 0.0.0.0 y usar el puerto proporcionado por Render
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
 
+ 
