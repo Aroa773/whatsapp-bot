@@ -1,4 +1,13 @@
 import os
+
+# Verificar que GOOGLE_CREDS_JSON está configurado
+GOOGLE_CREDS_JSON = os.getenv('GOOGLE_CREDS_JSON')
+if GOOGLE_CREDS_JSON is None:
+    print("¡ERROR! La variable de entorno 'GOOGLE_CREDS_JSON' no está definida.")
+else:
+    print("GOOGLE_CREDS_JSON cargada correctamente.")
+
+import os
 import gspread
 from google.auth.transport.requests import Request
 from google.oauth2.service_account import Credentials
