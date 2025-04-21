@@ -1,8 +1,8 @@
+import os
 from flask import Flask, request
 import gspread
 from google.oauth2.service_account import Credentials
 
-# Inicializa Flask
 app = Flask(__name__)
 
 # Configuración Google Sheets
@@ -27,4 +27,6 @@ def webhook():
     return "Mensaje recibido", 200
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    # Asegurarse de que la aplicación escuche en 0.0.0.0 y el puerto adecuado proporcionado por Render
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+
