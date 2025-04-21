@@ -1,0 +1,12 @@
+.env
+*.log
+*.csv
+__pycache__/
+.vscode/
+.nvm/
+token.json
+.nvm/
+
+token.json
+git rm --cached nombre-del-archivo-o-carpeta
+

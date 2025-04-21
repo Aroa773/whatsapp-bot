@@ -1,45 +1,54 @@
-import os
-
-# Verificar que GOOGLE_CREDS_JSON está configurado
-GOOGLE_CREDS_JSON = os.getenv('GOOGLE_CREDS_JSON')
-if GOOGLE_CREDS_JSON is None:
-    print("¡ERROR! La variable de entorno 'GOOGLE_CREDS_JSON' no está definida.")
-else:
-    print("GOOGLE_CREDS_JSON cargada correctamente.")
+import json
+print(json.dumps({"test": "success"}))  # Esto debería imprimir {"test": "success"}
 
 import os
-import gspread
-from google.auth.transport.requests import Request
-from google.oauth2.service_account import Credentials
 from flask import Flask, request
+from twilio.twiml.messaging_response import MessagingResponse
+import gspread
+from google.oauth2.service_account import Credentials
 
 app = Flask(__name__)
 
+# Configurar credenciales de Google desde una variable de entorno
+GOOGLE_CREDS_JSON = os.getenv("GOOGLE_CREDS_JSON")
+
+# Comprobar que la variable existe
+if not GOOGLE_CREDS_JSON:
+    raise ValueError("La variable de entorno GOOGLE_CREDS_JSON no está definida.")
+
+# Crear cliente de Google Sheets
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-SPREADSHEET_ID = '16ZMWnRrzvD_RCN3xSEp4RCDD7f6m3bfu3nNW4-UA-uc'  # 🔁 Reemplaza esto
+creds = Credentials.from_service_account_info(json.loads(GOOGLE_CREDS_JSON), scopes=SCOPES)
+client = gspread.authorize(creds)
 
-# Lee las credenciales desde la variable de entorno
-GOOGLE_CREDS_JSON = os.getenv('GOOGLE_CREDS_JSON')
+# ID del spreadsheet (lo puedes definir como variable de entorno si prefieres)
+SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")  # por ejemplo: '1aBcD...xyz'
 
-# Función para guardar en Google Sheets
+if not SPREADSHEET_ID:
+    raise ValueError("La variable de entorno SPREADSHEET_ID no está definida.")
+
 def guardar_en_sheets(remitente, mensaje):
-    creds = Credentials.from_service_account_info(
-        json.loads(GOOGLE_CREDS_JSON), scopes=SCOPES)
-    client = gspread.authorize(creds)
     sheet = client.open_by_key(SPREADSHEET_ID).sheet1
     sheet.append_row([remitente, mensaje])
 
-# Webhook para recibir mensajes de Twilio
-@app.route('/webhook', methods=['POST'])
+@app.route("/webhook", methods=["POST"])
 def webhook():
-    data = request.form
-    mensaje = data.get('Body')
-    remitente = data.get('From')
-    guardar_en_sheets(remitente, mensaje)
-    return "Mensaje recibido", 200
+    # Obtener mensaje de WhatsApp
+    mensaje = request.form.get("Body")
+    remitente = request.form.get("From")
 
+    # Guardar en Google Sheets
+    guardar_en_sheets(remitente, mensaje)
+
+    # Responder al usuario
+    respuesta = MessagingResponse()
+    respuesta.message("¡Gracias por tu mensaje! 😊")
+    return str(respuesta)
+
+# Escuchar en el puerto definido por Render
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port, debug=True)
 
 
 
